@@ -1,0 +1,101 @@
+{% extends 'bookstore/base.html' %}
+
+{% block content %}
+<h1>{{data}}</h1>
+    <div class="container">
+        <div class="container">
+          <div class="row pt-5 pb-2">
+              <h5 class="text-success pb-1">General informations </h5>
+            <div class="col-sm">
+              Orders : {{n_orders}}
+            </div>
+            <div class="col-sm">
+              Pending  : {{p_orders}}
+            </div>
+            <div class="col-sm">
+              Delivered : {{d_orders}}
+            </div>
+            <div class="col-sm">
+              Out of orders : {{out_orders}}
+            </div>
+            <div class="col-sm">
+              In progress : {{in_orders}}
+            </div>
+            <div class="col-sm">
+
+            </div>
+          </div>
+        </div>
+
+        <div class="row pt-5">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                    <h5>Customers</h5>
+                    <h6 class="card-subtitle mb-2 text-muted"><a class="btn btn-success" href="#">create</a></h6>
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th scope="col">Name</th>
+                              <th scope="col">las name</th>
+                              <th scope="col">Phone Number</th>
+                              <th scope="col">actions</th>
+                            </tr>
+                          </thead>
+                            <tbody>
+                                {% for item in customers %}
+                                        <tr>
+                                            <td>{{item.first_name}}</td>
+                                            <td>{{item.last_name}}</td>
+                                            <td>{{item.phone_number}}</td>
+                                              <td>
+                                                <a class="text-warning" href="#"><i class="fas fa-edit"></i></a>
+                                                <a class="text-danger" href="#"><i class="fas fa-trash-alt"></i></a>
+                                                  <a class="text-primary"  class="pl-5" href="{% url  'customer' item.id %}"><i class="fas fa-eye"></i></a>
+                                              </td>
+                                        </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card" >
+                    <div class="card-body">
+                    <h5>Orders</h5>
+                    <h6 class="card-subtitle mb-2 text-muted"><a class="btn btn-success" href="{% url 'create' %}">create</a></h6>
+
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th scope="col">book</th>
+                              <th scope="col">tag</th>
+                              <th scope="col">Price</th>
+                              <th scope="col">Actions</th>
+                            </tr>
+                          </thead>
+                            <tbody>
+                                {% for item in orders %}
+                                        <tr>
+                                            <td>{{item.book}}</td>
+                                            <td>{{item.status}}</td>
+                                            <td>{{item.date_created}}</td>
+                                             <td>
+                                                <a class="text-warning" href="{% url 'update' item.id %}"><i class="fas fa-edit"></i></a>
+                                                <a class="text-danger" href="{% url 'delete' item.id %}"><i class="fas fa-trash-alt"></i></a>
+                                            </td>
+                                        </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends 'bookstore/base.html' %}
+
+{% block content %}
+
+<div class="container pt-5">
+        <h5 class="pt-2">{{customer.first_name}}</h5>
+        <div class="container">
+
+            <form class="form-inline my-2 my-lg-0" method="GET">
+                {% csrf_token %}
+                {{ myFilter.form }}
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+
+        <div class="container">
+          <div class="row pt-2 pb-2">
+              <h5 class="text-success pb-1">General informations </h5>
+            <div class="col-sm">
+              last name: {{customer.last_name}}
+            </div>
+            <div class="col-sm">
+              phone number  : {{customer.phone_number}}
+            </div>
+            <div class="col-sm">
+              age : {{customer.age}}
+            </div>
+            <div class="col-sm">
+              date created : {{customer.date_created}}
+            </div>
+          </div>
+
+
+
+        </div>
+
+
+
+
+{% if not orders %}
+            <div class="row pt-1 pb-2">
+                    <div class="p-3 col-lg-8 mb-1 bg-danger text-white text-center">
+                        order is empty
+                    </div>
+            </div>
+
+
+            {% else %}
+<h5 class="text-success pb-1">Orders informations</h5>
+             <div class="col-lg-6">
+                    <div class="card" >
+                        <div class="card-body">
+                        <h5>Orders</h5>
+                        <h6 class="card-subtitle mb-2 text-muted"><a class="btn btn-success" href="{% url 'create' %}">create</a></h6>
+
+                            <table class="table">
+                              <thead>
+                                <tr>
+                                  <th scope="col">book</th>
+                                  <th scope="col">tag</th>
+                                  <th scope="col">Price</th>
+                                  <th scope="col">Actions</th>
+                                </tr>
+                              </thead>
+                                <tbody>
+                                    {% for item in orders %}
+                                            <tr>
+                                                <td>{{item.book}}</td>
+                                                <td>{{item.status}}</td>
+                                                <td>{{item.date_created}}</td>
+                                                 <td>
+                                                    <a class="text-warning" href="{% url 'update' item.id %}"><i class="fas fa-edit"></i></a>
+                                                    <a class="text-danger" href="{% url 'delete' item.id %}"><i class="fas fa-trash-alt"></i></a>
+                                                </td>
+                                            </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% endif %}
+    </div>
+{% endblock %}
